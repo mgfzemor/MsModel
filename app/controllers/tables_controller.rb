@@ -10,6 +10,8 @@ class TablesController < ApplicationController
   # GET /tables/1
   # GET /tables/1.json
   def show
+    @column = Column.new
+    @columns = @table.columns
   end
 
   def project

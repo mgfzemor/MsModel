@@ -27,7 +27,7 @@
 
   <div class="field">
     <%= form.label :table_types_id %>
-    <%= form.select :table_types_id, options_for_select(TableType.all.map{|s|[s.name, s.id]}) %>
+    <%= form.select :table_types_id, options_for_select(TableType.all.map{|s|[s.option, s.id]}) %>
   </div>
 
 

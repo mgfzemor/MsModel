@@ -7,7 +7,6 @@
     <tr>
       <th>Name</th>
       <th>Description</th>
-      <th>Size</th>
       <th>Prefix</th>
       <th colspan="3"></th>
     </tr>
@@ -18,7 +17,6 @@
       <tr>
         <td><%= ms_column_type.name %></td>
         <td><%= ms_column_type.description %></td>
-        <td><%= ms_column_type.size %></td>
         <td><%= ms_column_type.prefix %></td>
         <td><%= link_to 'Show', ms_column_type %></td>
         <td><%= link_to 'Edit', edit_ms_column_type_path(ms_column_type) %></td>
@@ -30,4 +28,5 @@
 
 <br>
 
-<%= link_to 'New Ms Column Type', new_ms_column_type_path %>
+<%= link_to 'New Ms Column Type', new_ms_column_type_path %> | 
+<%= link_to 'Home', root_path %>

@@ -10,10 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_28_225732) do
+ActiveRecord::Schema.define(version: 2018_11_29_031743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "columns", force: :cascade do |t|
+    t.string "system_name"
+    t.string "database_name"
+    t.boolean "nn"
+    t.boolean "uq"
+    t.boolean "bin"
+    t.boolean "un"
+    t.boolean "zf"
+    t.boolean "g"
+    t.boolean "active_id"
+    t.boolean "active_created"
+    t.boolean "active_updated"
+    t.bigint "ms_column_types_id"
+    t.bigint "tables_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ms_column_types_id"], name: "index_columns_on_ms_column_types_id"
+    t.index ["tables_id"], name: "index_columns_on_tables_id"
+  end
+
+  create_table "ms_column_types", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "prefix"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "projects", force: :cascade do |t|
     t.string "title"
@@ -41,4 +69,6 @@ ActiveRecord::Schema.define(version: 2018_11_28_225732) do
     t.index ["table_types_id"], name: "index_tables_on_table_types_id"
   end
 
+  add_foreign_key "columns", "ms_column_types", column: "ms_column_types_id"
+  add_foreign_key "columns", "tables", column: "tables_id"
 end

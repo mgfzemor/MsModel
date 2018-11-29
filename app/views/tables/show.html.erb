@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h3> Project: <small> <%= @table.project_name %> </small></h3>
 <p>
   <strong>System name:</strong>
@@ -12,9 +10,145 @@
 </p>
 
 <p>
+  <strong>MS Database name:</strong>
+  <%=@table.ms_database_name%>
+</p>
+
+<p>
   <strong>Table type:</strong>
   <%= @table.type.name %>
 </p>
-
+<hr/>
 <%= link_to 'Edit', edit_table_path(@table) %> |
 <%= link_to 'Back', project_path(@table.projects_id) %>
+
+<hr/>
+<%= button_tag 'Create new Column', id: 'create_column'%>
+
+<div id="column_form" style="display:none" class="mt-4">
+  <%= render 'columns/form' %>
+</div>
+
+<hr/>
+
+<h3>Columns</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>System name</th>
+      <th>Column name</th>
+      <th>MS Column name</th>
+      <th>NN</th>
+      <th>UQ</th>
+      <th>BIN</th>
+      <th>UN</th>
+      <th>ZF</th>
+      <th>G</th>
+      <th>ID</th>
+      <th>created</th>
+      <th>updated</th>
+      <th>MS type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @columns.each do |column| %>
+      <tr>
+        <td><%= column.system_name %></td>
+        <td><%= column.database_name %></td>
+        <td><%= column.ms_database_name %></td>
+        <td><%= column.nn %></td>
+        <td><%= column.uq %></td>
+        <td><%= column.bin %></td>
+        <td><%= column.un %></td>
+        <td><%= column.zf %></td>
+        <td><%= column.g %></td>
+        <td><%= column.active_id %></td>
+        <td><%= column.active_created %></td>
+        <td><%= column.active_updated %></td>
+        <td><%= column.ms_type %></td>
+        <td><%= link_to 'Show', column %></td>
+        <td><%= link_to 'Edit', edit_column_path(column) %></td>
+        <td><%= link_to 'Destroy', column, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<hr/>
+<h3> Code </h3>
+<div id="accordion">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+          Model
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+        <pre>
+        <code class="go">
+<%= @table.generate_getters_and_setters.html_safe %>
+        </code>
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Migration
+        </button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+        <pre>
+        <code class="ruby">
+<%= @table.generate_migration.html_safe %>
+        </code>
+        </pre>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Scaffold
+        </button>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+        <pre>
+        <code class="ruby">
+<%= @table.generate_scaffold.html_safe %>
+        </code>
+        </pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $("#create_column").click(function(){
+    $("#column_form").toggle(200);
+  });
+
+  $(document).ready(function() {
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>

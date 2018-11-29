@@ -1,0 +1,88 @@
+<%= form_with(model: @column, local: true) do |form| %>
+  <% if @column.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(column.errors.count, "error") %> prohibited this column from being saved:</h2>
+
+      <ul>
+      <% @column.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :system_name %>
+    <%= form.text_field :system_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :database_name %>
+    <%= form.text_field :database_name %>
+  </div>
+
+  <div class="field">
+  <table>
+    <thead>
+      <tr>
+
+        <th>Nn</th>
+        <th>Uq</th>
+        <th>Bin</th>
+        <th>Un</th>
+        <th>Zf</th>
+        <th>G</th>
+        <th>Active</th>
+        <th>Active created</th>
+        <th>Active updated</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <td>
+          <%= form.check_box :nn %>
+      </td>
+      <td>
+          <%= form.check_box :uq %>
+      </td>
+      <td>
+          <%= form.check_box :bin %>
+      </td>
+      <td>
+          <%= form.check_box :un %>
+      </td>
+      <td>
+          <%= form.check_box :zf %>
+      </td>
+      <td>
+          <%= form.check_box :g %>
+      </td>
+      <td>
+          <%= form.check_box :active_id %>
+      </td>
+      <td>
+          <%= form.check_box :active_created %>
+      </td>
+      <td>
+          <%= form.check_box :active_updated %>
+      </td>
+    </tbody>
+  </table>
+</div>
+
+
+  <div class="field">
+    <%= form.label :ms_column_types_id %>
+    <%= form.select :ms_column_types_id, options_for_select(MsColumnType.all.map{|s|[s.options_for_select, s.id]}) %>
+  </div>
+
+  <div class="field">
+    <%= form.text_field :tables_id, value: @table.id, style: 'display: none'%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

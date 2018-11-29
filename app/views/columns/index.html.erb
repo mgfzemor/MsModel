@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Columns</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>System name</th>
+      <th>Database name</th>
+      <th>Nn</th>
+      <th>Uq</th>
+      <th>Bin</th>
+      <th>Un</th>
+      <th>Zf</th>
+      <th>G</th>
+      <th>Active</th>
+      <th>Active created</th>
+      <th>Active updated</th>
+      <th>Mscolumntype</th>
+      <th>Table</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @columns.each do |column| %>
+      <tr>
+        <td><%= column.system_name %></td>
+        <td><%= column.database_name %></td>
+        <td><%= column.nn %></td>
+        <td><%= column.uq %></td>
+        <td><%= column.bin %></td>
+        <td><%= column.un %></td>
+        <td><%= column.zf %></td>
+        <td><%= column.g %></td>
+        <td><%= column.active_id %></td>
+        <td><%= column.active_created %></td>
+        <td><%= column.active_updated %></td>
+        <td><%= column.ms_column_types %></td>
+        <td><%= column.tables %></td>
+        <td><%= link_to 'Show', column %></td>
+        <td><%= link_to 'Edit', edit_column_path(column) %></td>
+        <td><%= link_to 'Destroy', column, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Column', new_column_path %>

@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>System name:</strong>
+  <%= @column.system_name %>
+</p>
+
+<p>
+  <strong>Database name:</strong>
+  <%= @column.database_name %>
+</p>
+
+<p>
+  <strong>Nn:</strong>
+  <%= @column.nn %>
+</p>
+
+<p>
+  <strong>Uq:</strong>
+  <%= @column.uq %>
+</p>
+
+<p>
+  <strong>Bin:</strong>
+  <%= @column.bin %>
+</p>
+
+<p>
+  <strong>Un:</strong>
+  <%= @column.un %>
+</p>
+
+<p>
+  <strong>Zf:</strong>
+  <%= @column.zf %>
+</p>
+
+<p>
+  <strong>G:</strong>
+  <%= @column.g %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @column.active_id %>
+</p>
+
+<p>
+  <strong>Active created:</strong>
+  <%= @column.active_created %>
+</p>
+
+<p>
+  <strong>Active updated:</strong>
+  <%= @column.active_updated %>
+</p>
+
+<p>
+  <strong>Mscolumntype:</strong>
+  <%= @column.ms_column_types %>
+</p>
+
+<hr/>
+
+  <%= @column.tables %>
+
+
+<%= link_to 'Edit', edit_column_path(@column) %> |
+<%= link_to 'Back', table_path(@column.tables) %>
