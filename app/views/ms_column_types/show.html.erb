@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @ms_column_type.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @ms_column_type.description %>
+</p>
+
+<p>
+  <strong>Size:</strong>
+  <%= @ms_column_type.size %>
+</p>
+
+<p>
+  <strong>Prefix:</strong>
+  <%= @ms_column_type.prefix %>
+</p>
+
+<%= link_to 'Edit', edit_ms_column_type_path(@ms_column_type) %> |
+<%= link_to 'Back', ms_column_types_path %>

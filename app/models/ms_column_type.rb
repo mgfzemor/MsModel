@@ -1,0 +1,2 @@
+class MsColumnType < ApplicationRecord
+end

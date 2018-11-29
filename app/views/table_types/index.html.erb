@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Table Types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Prefix</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @table_types.each do |table_type| %>
+      <tr>
+        <td><%= table_type.name %></td>
+        <td><%= table_type.description %></td>
+        <td><%= table_type.prefix %></td>
+        <td><%= link_to 'Show', table_type %></td>
+        <td><%= link_to 'Edit', edit_table_type_path(table_type) %></td>
+        <td><%= link_to 'Destroy', table_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Table Type', new_table_type_path %>

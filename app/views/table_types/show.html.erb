@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @table_type.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @table_type.description %>
+</p>
+
+<p>
+  <strong>Prefix:</strong>
+  <%= @table_type.prefix %>
+</p>
+
+<%= link_to 'Edit', edit_table_type_path(@table_type) %> |
+<%= link_to 'Back', table_types_path %>

@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+<h3>Project</h3>
+<p>
+  <strong>Title:</strong>
+  <%= @project.title %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%= @project.description %>
+</p>
+<hr/>
+<%= button_tag 'Create new table', id: 'create_table'%>
+
+<div id="table_form" style="display:none" class="mt-4">
+  <%= render 'tables/form' %>
+</div>
+<hr/>
+<h3>Created Tables</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>System name</th>
+      <th>Database name</th>
+      <th>MS Database name</th>
+      <th>Table Type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tables.each do |table| %>
+      <tr>
+        <td><%= table.system_name %></td>
+        <td><%= table.database_name %></td>
+        <td><%= table.ms_database_name %></td>
+        <td><%= table.type.name %></td>
+        <td><%= link_to 'Show', table_path(table) %></td>
+        <td><%= link_to 'Edit', edit_table_path(table) %></td>
+        <td><%= link_to 'Destroy', table, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>
+
+<script>
+  $("#create_table").click(function(){
+    $("#table_form").toggle(200);
+  });
+</script>

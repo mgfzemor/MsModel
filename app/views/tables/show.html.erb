@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<h3> Project: <small> <%= @table.project_name %> </small></h3>
+<p>
+  <strong>System name:</strong>
+  <%= @table.system_name %>
+</p>
+
+<p>
+  <strong>Database name:</strong>
+  <%=@table.database_name%>
+</p>
+
+<p>
+  <strong>Table type:</strong>
+  <%= @table.type.name %>
+</p>
+
+<%= link_to 'Edit', edit_table_path(@table) %> |
+<%= link_to 'Back', project_path(@table.projects_id) %>

@@ -1,0 +1,37 @@
+<%= form_with(model: @table, local: true) do |form| %>
+  <% if @table.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(table.errors.count, "error") %> prohibited this table from being saved:</h2>
+
+      <ul>
+      <% @table.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :system_name %>
+    <%= form.text_field :system_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :database_name %>
+    <%= form.text_field :database_name %>
+  </div>
+
+  <div class="field">
+    <%= form.text_field :projects_id, value: @project.id, style: 'display: none' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :table_types_id %>
+    <%= form.select :table_types_id, options_for_select(TableType.all.map{|s|[s.name, s.id]}) %>
+  </div>
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
