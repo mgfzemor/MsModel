@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_29_031743) do
+ActiveRecord::Schema.define(version: 2018_11_29_144904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,9 +24,6 @@ ActiveRecord::Schema.define(version: 2018_11_29_031743) do
     t.boolean "un"
     t.boolean "zf"
     t.boolean "g"
-    t.boolean "active_id"
-    t.boolean "active_created"
-    t.boolean "active_updated"
     t.bigint "ms_column_types_id"
     t.bigint "tables_id"
     t.datetime "created_at", null: false
@@ -41,11 +38,20 @@ ActiveRecord::Schema.define(version: 2018_11_29_031743) do
     t.string "prefix"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "rails_types_id"
+    t.index ["rails_types_id"], name: "index_ms_column_types_on_rails_types_id"
   end
 
   create_table "projects", force: :cascade do |t|
     t.string "title"
     t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rails_types", force: :cascade do |t|
+    t.string "name"
+    t.boolean "active_size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -61,6 +67,9 @@ ActiveRecord::Schema.define(version: 2018_11_29_031743) do
   create_table "tables", force: :cascade do |t|
     t.string "system_name"
     t.string "database_name"
+    t.boolean "active_id"
+    t.boolean "active_created"
+    t.boolean "active_updated"
     t.bigint "projects_id"
     t.bigint "table_types_id"
     t.datetime "created_at", null: false
@@ -71,4 +80,5 @@ ActiveRecord::Schema.define(version: 2018_11_29_031743) do
 
   add_foreign_key "columns", "ms_column_types", column: "ms_column_types_id"
   add_foreign_key "columns", "tables", column: "tables_id"
+  add_foreign_key "ms_column_types", "rails_types", column: "rails_types_id"
 end

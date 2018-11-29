@@ -18,6 +18,21 @@
   <strong>Table type:</strong>
   <%= @table.type.name %>
 </p>
+
+<p>
+  <strong>Active ID:</strong>
+  <%= @table.active_id %>
+</p>
+
+<p>
+  <strong>Active created:</strong>
+  <%= @table.active_created %>
+</p>
+
+<p>
+  <strong>Active updated:</strong>
+  <%= @table.active_updated %>
+</p>
 <hr/>
 <%= link_to 'Edit', edit_table_path(@table) %> |
 <%= link_to 'Back', project_path(@table.projects_id) %>

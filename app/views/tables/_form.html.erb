@@ -22,6 +22,32 @@
   </div>
 
   <div class="field">
+  <table>
+    <thead>
+      <tr>
+        <th>Active ID</th>
+        <th>Active Created</th>
+        <th>Active Updated</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <td>
+          <%= form.check_box :active_id %>
+      </td>
+      <td>
+          <%= form.check_box :active_created %>
+      </td>
+      <td>
+          <%= form.check_box :active_updated %>
+      </td>
+    </tbody>
+  </table>
+</div>
+
+
+
+  <div class="field">
     <%= form.text_field :projects_id, value: @project.id, style: 'display: none' %>
   </div>
 

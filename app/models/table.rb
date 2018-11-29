@@ -8,6 +8,10 @@ class Table < ApplicationRecord
     TableType.find(self.table_types_id)
   end
 
+  def column_type(column)
+
+  end
+
   def newline
     string = '<br/>'
   end
@@ -39,12 +43,20 @@ class Table < ApplicationRecord
     setter = header + body + footer + newline
   end
 
+  def set_null
+    string = ', null: false '
+  end
+
+  def set_unique
+    string = ', unique: true'
+  end
+
   def generate_scaffold
     prefix = 'rails g scaffold ' + self.system_name + ' '
     scaffold = prefix
     self.columns.each do |c|
       scaffold.concat(c.system_name)
-      scaffold.concat(':type ')
+      scaffold.concat(':'+c.ms_column_types.type_name+' ')
     end
     scaffold
   end
@@ -60,12 +72,34 @@ class Table < ApplicationRecord
     code
   end
 
+  def set_constraints(column)
+    constraints = ''
+    if column.nn #not null
+      constraints.concat(set_null)
+    end
+    if column.uq #unique
+      constraints.concat(set_unique)
+    end
+    constraints
+  end
+
+  def set_id(column)
+    id = ''
+    unless column.active_id
+      id = ', id: false'
+    end
+    id
+  end
+
   def create_migration_up
     function = 'def up' + newline
-    create_table = indent + 'create_table :' + self.ms_database_name + ' do |t|' + newline
+    id = ''
+    create_table = indent + 'create_table :' + self.ms_database_name + id +' do |t|' + newline
     db_columns = ''
     self.columns.each do |c|
-      db_columns.concat(indent+indent+ 't.type :' + c.ms_database_name + newline)
+      db_columns.concat(indent+indent+ 't.type :' + c.ms_database_name)
+      constraints =  set_constraints(c)
+      db_columns.concat(constraints + newline)
     end
     db_columns.concat(indent + 'end' + newline)
     migration_up = function + create_table + db_columns + 'end' + newline
@@ -73,7 +107,7 @@ class Table < ApplicationRecord
 
   def create_migration_down
     function = 'def down' + newline
-    
+
   end
 
   def generate_migration

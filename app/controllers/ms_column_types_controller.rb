@@ -69,6 +69,6 @@ class MsColumnTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ms_column_type_params
-      params.require(:ms_column_type).permit(:name, :description, :prefix)
+      params.require(:ms_column_type).permit(:name, :description, :prefix, :rails_types_id)
     end
 end

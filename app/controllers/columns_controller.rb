@@ -74,6 +74,6 @@ class ColumnsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def column_params
-      params.require(:column).permit(:system_name, :database_name, :nn, :uq, :bin, :un, :zf, :g, :active_id, :active_created, :active_updated, :ms_column_types_id, :tables_id)
+      params.require(:column).permit(:system_name, :database_name, :nn, :uq, :bin, :un, :zf, :g, :ms_column_types_id, :tables_id)
     end
 end

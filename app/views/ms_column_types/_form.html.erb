@@ -20,10 +20,20 @@
     <%= form.label :description %>
     <%= form.text_area :description %>
   </div>
-  
+
   <div class="field">
     <%= form.label :prefix %>
     <%= form.text_field :prefix %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rails_types_id %>
+    <%= form.text_field :rails_types_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rails_types_id %>
+    <%= form.select :rails_types_id, options_for_select(RailsType.all.map{|s|[s.name, s.id]}) %>
   </div>
 
   <div class="actions">

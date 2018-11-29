@@ -78,6 +78,6 @@ class TablesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def table_params
-      params.require(:table).permit(:system_name, :database_name, :projects_id, :table_types_id)
+      params.require(:table).permit(:system_name, :database_name, :active_id, :active_created, :active_updated, :projects_id, :table_types_id)
     end
 end

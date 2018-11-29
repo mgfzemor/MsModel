@@ -8,6 +8,7 @@
       <th>Name</th>
       <th>Description</th>
       <th>Prefix</th>
+      <th>Rails type</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= ms_column_type.name %></td>
         <td><%= ms_column_type.description %></td>
         <td><%= ms_column_type.prefix %></td>
+        <td><%= ms_column_type.type_name %></td>
         <td><%= link_to 'Show', ms_column_type %></td>
         <td><%= link_to 'Edit', edit_ms_column_type_path(ms_column_type) %></td>
         <td><%= link_to 'Destroy', ms_column_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -28,5 +30,5 @@
 
 <br>
 
-<%= link_to 'New Ms Column Type', new_ms_column_type_path %> | 
+<%= link_to 'New Ms Column Type', new_ms_column_type_path %> |
 <%= link_to 'Home', root_path %>

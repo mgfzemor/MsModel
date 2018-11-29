@@ -1,0 +1,2 @@
+class RailsType < ApplicationRecord
+end

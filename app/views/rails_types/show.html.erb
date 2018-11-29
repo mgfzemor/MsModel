@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @rails_type.name %>
+</p>
+
+<p>
+  <strong>Active size:</strong>
+  <%= @rails_type.active_size %>
+</p>
+
+<%= link_to 'Edit', edit_rails_type_path(@rails_type) %> |
+<%= link_to 'Back', rails_types_path %>

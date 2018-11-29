@@ -1,0 +1,27 @@
+<%= form_with(model: rails_type, local: true) do |form| %>
+  <% if rails_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(rails_type.errors.count, "error") %> prohibited this rails_type from being saved:</h2>
+
+      <ul>
+      <% rails_type.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :active_size %>
+    <%= form.check_box :active_size %>
+  </div>
+  
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
