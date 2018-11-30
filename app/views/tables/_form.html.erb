@@ -45,18 +45,13 @@
   </table>
 </div>
 
-
-
   <div class="field">
     <%= form.text_field :projects_id, value: @project.id, style: 'display: none' %>
   </div>
-
   <div class="field">
     <%= form.label :table_types_id %>
     <%= form.select :table_types_id, options_for_select(TableType.all.map{|s|[s.option, s.id]}) %>
   </div>
-
-
   <div class="actions">
     <%= form.submit %>
   </div>

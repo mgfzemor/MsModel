@@ -1,0 +1,26 @@
+<%= form_with(model: @primary_key, local: true) do |form| %>
+  <% if @primary_key.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(primary_key.errors.count, "error") %> prohibited this primary_key from being saved:</h2>
+      <ul>
+      <% @primary_key.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :table_id %>
+    <%= form.hidden_field :table_id, value: @table.id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :column_id %>
+    <%= form.select :column_id, options_for_select(@columns.all.map{|s|[s.ms_database_name, s.id]}) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
