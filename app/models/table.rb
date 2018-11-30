@@ -22,8 +22,10 @@ class Table < ApplicationRecord
     '<br/>'
   end
 
-  def indent
-    '&ensp;&ensp;'
+  def indent(qty = 1)
+    inicial = ''
+    qty.times { inicial += '&ensp;&ensp;' }
+    inicial
   end
 
   def ms_database_name
@@ -99,11 +101,52 @@ class Table < ApplicationRecord
     pk
   end
 
+  def create_foreign_keys
+    fk_text = ''
+    ti = newline + indent(3)
+    self.foreign_keys.each do |fk|
+      string = "execute 'ALTER TABLE %s#{ti} \
+ADD CONSTRAINT \"FK_%s_%s\" FOREIGN KEY (\"%s\")#{ti} \
+REFERENCES %s (%s) MATCH SIMPLE#{ti} \
+ON UPDATE RESTRICT#{ti} \
+ON DELETE RESTRICT;#{newline + indent(2)} \
+CREATE INDEX \"IN_FK_%s_%s\"#{ti} \
+ON %s(\"%s\");'#{newline}"
+      fk_text += indent + string % [self.ms_database_name,
+                                    fk.target_td.database_name,
+                                    self.database_name,
+                                    fk.source_td.ms_database_name,
+                                    fk.target_td.ms_database_name,
+                                    fk.target_cd.ms_database_name,
+                                    fk.target_td.database_name,
+                                    self.database_name,
+                                    self.ms_database_name,
+                                    fk.source_cd.ms_database_name]
+    end
+    fk_text
+  end
+
   def drop_primary_key
     db = self.ms_database_name
     pk = ''
-    pk.concat(indent + "execute #{'"'}ALTER TABLE '#{db}' DROP CONSTRAINT 'PK_#{db}'#{'"'}" + newline) if self.primary_key
+    pk.concat(indent + "execute 'ALTER TABLE '#{db}' DROP CONSTRAINT 'PK_#{db}';'" + newline) if self.primary_key
     pk
+  end
+
+  def drop_foreign_keys
+    fk_text = ''
+    self.foreign_keys.each do |fk|
+      fk_text.concat(indent + ("execute 'ALTER TABLE \"%s\" DROP CONSTRAINT \"FK_%s_%s\";'#{newline}" % [self.ms_database_name, fk.target_td.database_name, self.database_name]))
+    end
+    fk_text
+  end
+
+  def drop_indexes
+    in_text = ''
+    self.foreign_keys.each do |fk|
+      in_text.concat(indent + ("execute 'DROP \"INDEX IN_FK_%s_%s\";'#{newline}" % [fk.target_td.database_name, self.database_name]))
+    end
+    in_text
   end
 
   def create_migration_up
@@ -116,7 +159,7 @@ class Table < ApplicationRecord
       db_columns.concat(constraints + newline)
     end
     db_columns.concat(indent + 'end' + newline)
-    function + create_table + db_columns + create_primary_key + end_function
+    function + create_table + db_columns + create_primary_key + create_foreign_keys + end_function
   end
 
   def end_function
@@ -126,7 +169,7 @@ class Table < ApplicationRecord
   def create_migration_down
     function = 'def down' + newline
     drop_table = indent + 'drop_table :' + self.ms_database_name + newline
-    function + drop_table + drop_primary_key + end_function
+    function + drop_primary_key + drop_foreign_keys + drop_indexes + drop_table + end_function
   end
 
   def generate_migration
