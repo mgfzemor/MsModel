@@ -78,14 +78,13 @@ class Table < ApplicationRecord
     constraints
   end
 
-  def set_id(column)
-    column.active_id ? '' : ', id: false'
+  def set_id
+    self.active_id ? '' : ', id: false'
   end
 
   def create_migration_up
     function = 'def up' + newline
-    id = ''
-    create_table = indent + 'create_table :' + self.ms_database_name + id +' do |t|' + newline
+    create_table = indent + 'create_table :' + self.ms_database_name + set_id + ' do |t|' + newline
     db_columns = ''
     self.columns.each do |c|
       db_columns.concat(indent+indent+ 't.type :' + c.ms_database_name)
