@@ -1,5 +1,6 @@
 class Table < ApplicationRecord
   has_many :columns, :foreign_key => "tables_id", :class_name => "Column"
+  has_one :primary_key
   def project_name
     Project.find(self.projects_id).title
   end
@@ -82,6 +83,24 @@ class Table < ApplicationRecord
     self.active_id ? '' : ', id: false'
   end
 
+  def pk_name
+    Column.find(self.primary_key.column_id).ms_database_name
+  end
+
+  def create_primary_key
+    db = self.ms_database_name
+    pk = ''
+    pk.concat(indent + "execute #{'"'}ALTER TABLE '#{db}' ADD CONSTRAINT 'PK_#{db}' PRIMARY KEY ('#{pk_name}')#{'"'}" + newline) if self.primary_key
+    pk
+  end
+
+  def drop_primary_key
+    db = self.ms_database_name
+    pk = ''
+    pk.concat(indent + "execute #{'"'}ALTER TABLE '#{db}' DROP CONSTRAINT 'PK_#{db}'#{'"'}" + newline) if self.primary_key
+    pk
+  end
+
   def create_migration_up
     function = 'def up' + newline
     create_table = indent + 'create_table :' + self.ms_database_name + set_id + ' do |t|' + newline
@@ -92,8 +111,7 @@ class Table < ApplicationRecord
       db_columns.concat(constraints + newline)
     end
     db_columns.concat(indent + 'end' + newline)
-
-    function + create_table + db_columns + end_function
+    function + create_table + db_columns + create_primary_key + end_function
   end
 
   def end_function
@@ -103,7 +121,7 @@ class Table < ApplicationRecord
   def create_migration_down
     function = 'def down' + newline
     drop_table = indent + 'drop_table :' + self.ms_database_name + newline
-    function + drop_table + end_function
+    function + drop_table + drop_primary_key + end_function
   end
 
   def generate_migration
