@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 2018_11_30_173313) do
     t.index ["ms_column_types_id"], name: "index_columns_on_ms_column_types_id"
     t.index ["tables_id"], name: "index_columns_on_tables_id"
   end
-<<<<<<< Updated upstream
 
   create_table "foreign_keys", force: :cascade do |t|
     t.integer "source_column", null: false
@@ -40,9 +39,6 @@ ActiveRecord::Schema.define(version: 2018_11_30_173313) do
     t.integer "target_table", null: false
   end
 
-=======
-  
->>>>>>> Stashed changes
   create_table "ms_column_types", force: :cascade do |t|
     t.string "name"
     t.text "description"

@@ -1,4 +1,4 @@
-<h1>Primary Keys</h1>
+<h3>Primary Keys</h3>
 
 <table>
   <thead>
@@ -12,8 +12,8 @@
   <tbody>
 
       <tr>
-        <td><%= @primary_keys.table %></td>
-        <td><%= @primary_keys.column %></td>
+        <td><%= @primary_keys.table.ms_database_name %></td>
+        <td><%= @primary_keys.column.ms_database_name %></td>
         <td><%= link_to 'Edit', edit_primary_key_path(@primary_keys) %></td>
         <td><%= link_to 'Destroy', @primary_keys, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

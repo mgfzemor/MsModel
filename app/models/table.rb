@@ -134,15 +134,12 @@ ON %s(\"%s\");'#{newline}"
   end
 
   def drop_primary_key
+    db = self.ms_database_name
     pk = ''
-<<<<<<< Updated upstream
-    pk.concat(indent + "execute 'ALTER TABLE '#{db}' DROP CONSTRAINT 'PK_#{db}';'" + newline) if self.primary_key
-=======
     if self.primary_key
       string = indent + "execute 'ALTER TABLE %s DROP CONSTRAINT;'" + newline
       pk = string % [str(db), str(db)]
     end
->>>>>>> Stashed changes
     pk
   end
 
