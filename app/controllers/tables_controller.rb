@@ -13,6 +13,9 @@ class TablesController < ApplicationController
     @column = Column.new
     @primary_key = PrimaryKey.new
     @columns = @table.columns
+
+    @foreign_key = ForeignKey.new
+    @foreign_keys = @table.foreign_keys
   end
 
   def project

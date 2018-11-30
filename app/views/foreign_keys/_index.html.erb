@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h3>Foreign Keys</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Source column</th>
+      <th>Source table</th>
+      <th>Target column</th>
+      <th>Target table</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @foreign_keys.each do |foreign_key| %>
+      <tr>
+        <td><%= Column.find(foreign_key.source_column).ms_database_name %></td>
+        <td><%= Table.find(foreign_key.source_table).ms_database_name %></td>
+        <td><%= Column.find(foreign_key.target_column).ms_database_name %></td>
+        <td><%= Table.find(foreign_key.target_table).ms_database_name %></td>
+        <td><%= link_to 'Show', foreign_key %></td>
+        <td><%= link_to 'Edit', edit_foreign_key_path(foreign_key) %></td>
+        <td><%= link_to 'Destroy', foreign_key, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -27,8 +27,7 @@ class ColumnsController < ApplicationController
   def create
     @column = Column.new(column_params)
     @table = Table.find(@column.tables_id)
-    puts '------------'
-    puts @table
+
     respond_to do |format|
       if @column.save
         format.html { redirect_to @table, notice: 'Column was successfully created.' }

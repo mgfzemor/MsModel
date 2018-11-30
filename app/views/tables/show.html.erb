@@ -39,10 +39,16 @@
 
 <hr/>
 <%= button_tag 'Create new Column', id: 'create_column'%>
+<%= button_tag 'Create new Foreign Key', id: 'create_foreign_key'%>
 <%= button_tag 'Create primary_key', id: 'create_pk'%>
 
 <div id="column_form" style="display:none" class="mt-4">
   <%= render 'columns/form' %>
+</div>
+
+
+<div id="foreign_key_form" style="display:none" class="mt-4">
+  <%= render 'foreign_keys/form' %>
 </div>
 
 <div id="pk_form" style="display:none" class="mt-4">
@@ -51,47 +57,12 @@
 
 <hr/>
 
-<h3>Columns</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th>System name</th>
-      <th>Column name</th>
-      <th>MS Column name</th>
-      <th>NN</th>
-      <th>UQ</th>
-      <th>BIN</th>
-      <th>UN</th>
-      <th>ZF</th>
-      <th>G</th>
-      <th>MS type</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @columns.each do |column| %>
-      <tr>
-        <td><%= column.system_name %></td>
-        <td><%= column.database_name %></td>
-        <td><%= column.ms_database_name %></td>
-        <td><%= column.nn %></td>
-        <td><%= column.uq %></td>
-        <td><%= column.bin %></td>
-        <td><%= column.un %></td>
-        <td><%= column.zf %></td>
-        <td><%= column.g %></td>
-        <td><%= column.ms_type %></td>
-        <td><%= link_to 'Show', column %></td>
-        <td><%= link_to 'Edit', edit_column_path(column) %></td>
-        <td><%= link_to 'Destroy', column, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<%= render 'columns/index' %>
 <hr/>
+
+<%= render 'foreign_keys/index' %>
+<hr/>
+
 <h3> Code </h3>
 <div id="accordion">
   <div class="card">
@@ -154,17 +125,27 @@
 <script>
   $("#create_column").click(function(){
     $("#column_form").toggle(200);
+    $("#foreign_key_form").hide(200);
+    $("#pk_form").hide(200);
+  });
+
+  $("#create_foreign_key").click(function(){
+    $("#foreign_key_form").toggle(200);
+    $("#column_form").hide(200);
+    $("#pk_form").hide(200);
   });
 
   $("#create_pk").click(function(){
     $("#pk_form").toggle(200);
+    $("#foreign_key_form").hide(200);
+    $("#column_form").hide(200);
   });
 
   $(document).ready(function() {
-  $('pre code').each(function(i, block) {
-    hljs.highlightBlock(block);
+    $('pre code').each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
   });
-});
 </script>
 
 <link rel="stylesheet"

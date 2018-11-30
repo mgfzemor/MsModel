@@ -6,8 +6,8 @@ class CreateTables < ActiveRecord::Migration[5.2]
       t.boolean :active_id
       t.boolean :active_created
       t.boolean :active_updated
-      t.references(:projects)
-      t.references(:table_types)
+      t.references :projects
+      t.references :table_types
       t.timestamps
     end
   end

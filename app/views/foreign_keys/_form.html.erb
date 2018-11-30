@@ -1,0 +1,59 @@
+<%= form_with(model: @foreign_key, local: true) do |form| %>
+  <% if @foreign_key.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@foreign_key.errors.count, "error") %> prohibited this foreign_key from being saved:</h2>
+
+      <ul>
+      <% @foreign_key.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :source_column %>
+    <%= form.select :source_column, @table.columns.map { |c| [c.ms_database_name, c.id]} %>
+  </div>
+
+  <%= form.hidden_field :source_table, value: @table.id %>
+
+  <div class="field">
+    <%= form.label :target_table %>
+    <%= form.select :target_table, @table.project.tables.map { |t| [t.ms_database_name, t.id]}, {include_blank: "Selecione uma tabela para referenciar"} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :target_column %>
+    <%= form.select :target_column, [], {include_blank: "Seleciona uma tabela para referenciar primeiro"} %>
+  </div>
+
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<script>
+  $('#foreign_key_target_table').change( e => {
+    $.ajax({
+      dataType: "json",
+      url: `/tables/${e.target.value}`
+    }).done( response => {
+      const columnTargetSelect = $('#foreign_key_target_column');
+
+      if (response.constructor !== Array) {
+        let innerHTML = '<option value="">Seleciona uma coluna</option>';
+
+        for (let column of response.parsed_columns) {
+          innerHTML += `<option value="${column.id}">${column.name}</option>`
+        }
+
+        columnTargetSelect.html(innerHTML);
+      } else {
+        columnTargetSelect.html('<option value="">Selecione uma tabela para referenciar primeiro</option>');
+      }
+    });
+  })
+</script>

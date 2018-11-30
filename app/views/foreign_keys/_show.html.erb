@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Source column:</strong>
+  <%= @foreign_key.source_column %>
+</p>
+
+<p>
+  <strong>Source table:</strong>
+  <%= @foreign_key.source_table %>
+</p>
+
+<p>
+  <strong>Target column:</strong>
+  <%= @foreign_key.target_column %>
+</p>
+
+<p>
+  <strong>Target table:</strong>
+  <%= @foreign_key.target_table %>
+</p>
+
+<%= link_to 'Back', foreign_keys_path %>
