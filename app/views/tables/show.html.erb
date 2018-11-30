@@ -125,14 +125,20 @@
 <script>
   $("#create_column").click(function(){
     $("#column_form").toggle(200);
+    $("#foreign_key_form").hide(200);
+    $("#pk_form").hide(200);
   });
 
   $("#create_foreign_key").click(function(){
     $("#foreign_key_form").toggle(200);
+    $("#column_form").hide(200);
+    $("#pk_form").hide(200);
   });
 
   $("#create_pk").click(function(){
     $("#pk_form").toggle(200);
+    $("#foreign_key_form").hide(200);
+    $("#column_form").hide(200);
   });
 
   $(document).ready(function() {

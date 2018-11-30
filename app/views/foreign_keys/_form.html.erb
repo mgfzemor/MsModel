@@ -39,21 +39,20 @@
   $('#foreign_key_target_table').change( e => {
     $.ajax({
       dataType: "json",
-      url: "/tables/2",
-      context: document.body
+      url: `/tables/${e.target.value}`
     }).done( response => {
-      if (response) {
-        const columnTargetSelect = $('#foreign_key_target_column');
+      const columnTargetSelect = $('#foreign_key_target_column');
+
+      if (response.constructor !== Array) {
         let innerHTML = '<option value="">Seleciona uma coluna</option>';
 
-        console.log(response);
-        for(let column of response.parsed_columns) {
+        for (let column of response.parsed_columns) {
           innerHTML += `<option value="${column.id}">${column.name}</option>`
         }
 
         columnTargetSelect.html(innerHTML);
       } else {
-
+        columnTargetSelect.html('<option value="">Selecione uma tabela para referenciar primeiro</option>');
       }
     });
   })
