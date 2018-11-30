@@ -4,7 +4,7 @@ class MsColumnType < ApplicationRecord
   end
 
   def type_name
-    tp_name = RailsType.find(self.rails_types_id).name
+    RailsType.find(self.rails_types_id).name
   end
 
 end
