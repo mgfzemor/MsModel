@@ -12,6 +12,9 @@ class TablesController < ApplicationController
   def show
     @column = Column.new
     @columns = @table.columns
+
+    @foreign_key = ForeignKey.new
+    @foreign_keys = @table.foreign_keys
   end
 
   def project

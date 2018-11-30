@@ -1,20 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Columns</h1>
+<h3>Columns</h3>
 
 <table>
   <thead>
     <tr>
       <th>System name</th>
-      <th>Database name</th>
-      <th>Nn</th>
-      <th>Uq</th>
-      <th>Bin</th>
-      <th>Un</th>
-      <th>Zf</th>
+      <th>Column name</th>
+      <th>MS Column name</th>
+      <th>NN</th>
+      <th>UQ</th>
+      <th>BIN</th>
+      <th>UN</th>
+      <th>ZF</th>
       <th>G</th>
-      <th>Mscolumntype</th>
-      <th>Table</th>
+      <th>MS type</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -24,14 +24,14 @@
       <tr>
         <td><%= column.system_name %></td>
         <td><%= column.database_name %></td>
+        <td><%= column.ms_database_name %></td>
         <td><%= column.nn %></td>
         <td><%= column.uq %></td>
         <td><%= column.bin %></td>
         <td><%= column.un %></td>
         <td><%= column.zf %></td>
         <td><%= column.g %></td>
-        <td><%= column.ms_column_types %></td>
-        <td><%= column.tables %></td>
+        <td><%= column.ms_type %></td>
         <td><%= link_to 'Show', column %></td>
         <td><%= link_to 'Edit', edit_column_path(column) %></td>
         <td><%= link_to 'Destroy', column, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -39,7 +39,3 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Column', new_column_path %>
