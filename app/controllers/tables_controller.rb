@@ -12,6 +12,7 @@ class TablesController < ApplicationController
   def show
     @column = Column.new
     @primary_key = PrimaryKey.new
+    @primary_keys = @table.primary_key
     @columns = @table.columns
 
     @foreign_key = ForeignKey.new

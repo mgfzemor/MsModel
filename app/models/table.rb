@@ -90,14 +90,21 @@ class Table < ApplicationRecord
     self.active_id ? '' : ', id: false'
   end
 
-  def pk_name
+  def pk_column_name
     Column.find(self.primary_key.column_id).ms_database_name
+  end
+
+  def str(string)
+    "\"#{string}\""
   end
 
   def create_primary_key
     db = self.ms_database_name
     pk = ''
-    pk.concat(indent + "execute #{'"'}ALTER TABLE '#{db}' ADD CONSTRAINT 'PK_#{db}' PRIMARY KEY ('#{pk_name}')#{'"'}" + newline) if self.primary_key
+    if self.primary_key
+      string = indent + "execute 'ALTER TABLE %s ADD CONSTRAINT %s PRIMARY KEY (%s);'" + newline
+      pk = string % [str(db), str(db), str(pk_column_name)]
+    end
     pk
   end
 
@@ -127,9 +134,15 @@ ON %s(\"%s\");'#{newline}"
   end
 
   def drop_primary_key
-    db = self.ms_database_name
     pk = ''
+<<<<<<< Updated upstream
     pk.concat(indent + "execute 'ALTER TABLE '#{db}' DROP CONSTRAINT 'PK_#{db}';'" + newline) if self.primary_key
+=======
+    if self.primary_key
+      string = indent + "execute 'ALTER TABLE %s DROP CONSTRAINT;'" + newline
+      pk = string % [str(db), str(db)]
+    end
+>>>>>>> Stashed changes
     pk
   end
 
