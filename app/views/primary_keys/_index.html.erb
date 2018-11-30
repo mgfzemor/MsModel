@@ -1,0 +1,22 @@
+<h1>Primary Keys</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Table</th>
+      <th>Column</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+      <tr>
+        <td><%= @primary_keys.table %></td>
+        <td><%= @primary_keys.column %></td>
+        <td><%= link_to 'Edit', edit_primary_key_path(@primary_keys) %></td>
+        <td><%= link_to 'Destroy', @primary_keys, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+
+  </tbody>
+</table>
