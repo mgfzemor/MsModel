@@ -40,13 +40,19 @@
 <hr/>
 <%= button_tag 'Create new Column', id: 'create_column'%>
 <%= button_tag 'Create new Foreign Key', id: 'create_foreign_key'%>
+<%= button_tag 'Create primary_key', id: 'create_pk'%>
 
 <div id="column_form" style="display:none" class="mt-4">
   <%= render 'columns/form' %>
 </div>
 
+
 <div id="foreign_key_form" style="display:none" class="mt-4">
   <%= render 'foreign_keys/form' %>
+</div>
+
+<div id="pk_form" style="display:none" class="mt-4">
+  <%= render 'primary_keys/form' %>
 </div>
 
 <hr/>
@@ -123,6 +129,10 @@
 
   $("#create_foreign_key").click(function(){
     $("#foreign_key_form").toggle(200);
+  });
+
+  $("#create_pk").click(function(){
+    $("#pk_form").toggle(200);
   });
 
   $(document).ready(function() {

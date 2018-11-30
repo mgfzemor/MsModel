@@ -2,6 +2,7 @@ class Table < ApplicationRecord
   belongs_to :project, foreign_key: 'projects_id', class_name: 'Project'
   has_many :columns, foreign_key: 'tables_id', class_name: 'Column'
   has_many :foreign_keys, foreign_key: 'source_table'
+  has_one :primary_key
 
   def project_name
     Project.find(projects_id).title
@@ -83,14 +84,31 @@ class Table < ApplicationRecord
     constraints
   end
 
-  def set_id(column)
-    column.active_id ? '' : ', id: false'
+  def set_id
+    self.active_id ? '' : ', id: false'
+  end
+
+  def pk_name
+    Column.find(self.primary_key.column_id).ms_database_name
+  end
+
+  def create_primary_key
+    db = self.ms_database_name
+    pk = ''
+    pk.concat(indent + "execute #{'"'}ALTER TABLE '#{db}' ADD CONSTRAINT 'PK_#{db}' PRIMARY KEY ('#{pk_name}')#{'"'}" + newline) if self.primary_key
+    pk
+  end
+
+  def drop_primary_key
+    db = self.ms_database_name
+    pk = ''
+    pk.concat(indent + "execute #{'"'}ALTER TABLE '#{db}' DROP CONSTRAINT 'PK_#{db}'#{'"'}" + newline) if self.primary_key
+    pk
   end
 
   def create_migration_up
     function = 'def up' + newline
-    id = ''
-    create_table = indent + 'create_table :' + ms_database_name + id + ' do |t|' + newline
+    create_table = indent + 'create_table :' + self.ms_database_name + set_id + ' do |t|' + newline
     db_columns = ''
     columns.each do |c|
       db_columns.concat(indent + indent + 't.type :' + c.ms_database_name)
@@ -98,15 +116,22 @@ class Table < ApplicationRecord
       db_columns.concat(constraints + newline)
     end
     db_columns.concat(indent + 'end' + newline)
+    function + create_table + db_columns + create_primary_key + end_function
+  end
 
-    function + create_table + db_columns + 'end' + newline
+  def end_function
+    'end' + newline + newline
   end
 
   def create_migration_down
-    'def down' + newline
+    function = 'def down' + newline
+    drop_table = indent + 'drop_table :' + self.ms_database_name + newline
+    function + drop_table + drop_primary_key + end_function
   end
 
   def generate_migration
-    create_migration_up
+    up = create_migration_up
+    down = create_migration_down
+    up + down
   end
 end

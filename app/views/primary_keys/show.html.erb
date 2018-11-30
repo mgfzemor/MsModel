@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Table:</strong>
+  <%= @primary_key.table %>
+</p>
+
+<p>
+  <strong>Column:</strong>
+  <%= @primary_key.column %>
+</p>
+
+<%= link_to 'Edit', edit_primary_key_path(@primary_key) %> |
+<%= link_to 'Back', primary_keys_path %>
