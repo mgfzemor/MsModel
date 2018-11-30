@@ -11,6 +11,7 @@ class TablesController < ApplicationController
   # GET /tables/1.json
   def show
     @column = Column.new
+    @primary_key = PrimaryKey.new
     @columns = @table.columns
   end
 
