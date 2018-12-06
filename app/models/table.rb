@@ -2,6 +2,7 @@ class Table < ApplicationRecord
   belongs_to :project, foreign_key: 'projects_id', class_name: 'Project'
   has_many :columns, foreign_key: 'tables_id', class_name: 'Column'
   has_many :foreign_keys, foreign_key: 'source_table'
+  has_many :target_foreign_keys, foreign_key: 'target_table'
   has_one :primary_key
 
   def project_name
@@ -36,6 +37,10 @@ class Table < ApplicationRecord
     "self.table_name = ':" + ms_database_name + "'" + newline
   end
 
+  def generate_fk(fk)
+    "has_many :#{Table.find(fk.target_table).system_name.pluralize}, foreign_key: '#{Column.find(fk.source_column).ms_database_name}', class_name: '#{Table.find(fk.target_table).ms_database_name}'"
+  end
+
   def generate_getter(attribute)
     header = 'def ' +  attribute.system_name + '(value)' + newline
     body = indent + 'write_attribute(:' + attribute.ms_database_name + ', value)' + newline
@@ -68,12 +73,19 @@ class Table < ApplicationRecord
     scaffold
   end
 
-  def generate_getters_and_setters
-    code = generate_table_name + newline
+  def generate_model
+    code = ''
+    foreign_keys.each do |fk|
+      code.concat(generate_fk(fk) + newline)
+    end
+
+    code.concat(generate_table_name + newline)
+
     columns.each do |column|
       code.concat(generate_getter(column))
       code.concat(generate_setter(column))
     end
+
 
     code
   end
