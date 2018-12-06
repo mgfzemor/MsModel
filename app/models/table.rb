@@ -2,7 +2,7 @@ class Table < ApplicationRecord
   belongs_to :project, foreign_key: 'projects_id', class_name: 'Project'
   has_many :columns, foreign_key: 'tables_id', class_name: 'Column'
   has_many :foreign_keys, foreign_key: 'source_table'
-  has_many :target_foreign_keys, foreign_key: 'target_table'
+  has_many :target_foreign_keys, foreign_key: 'target_table', class_name: 'ForeignKey'
   has_one :primary_key
 
   def project_name
@@ -37,8 +37,12 @@ class Table < ApplicationRecord
     "self.table_name = ':" + ms_database_name + "'" + newline
   end
 
-  def generate_fk(fk)
-    "has_many :#{Table.find(fk.target_table).system_name.pluralize}, foreign_key: '#{Column.find(fk.source_column).ms_database_name}', class_name: '#{Table.find(fk.target_table).ms_database_name}'"
+  def generate_belongs_to(fk)
+    "belongs_to :#{Table.find(fk.target_table).system_name.downcase}, foreign_key: '#{Column.find(fk.source_column).ms_database_name}', class_name: '#{Table.find(fk.target_table).ms_database_name}'"
+  end
+
+  def generate_has_many(fk)
+    "has_many :#{Table.find(fk.source_table).system_name.pluralize}, foreign_key: '#{Column.find(fk.source_column).ms_database_name}', class_name: '#{Table.find(fk.source_table).ms_database_name}'"
   end
 
   def generate_getter(attribute)
@@ -76,7 +80,10 @@ class Table < ApplicationRecord
   def generate_model
     code = ''
     foreign_keys.each do |fk|
-      code.concat(generate_fk(fk) + newline)
+      code.concat(generate_belongs_to(fk) + newline)
+    end
+    target_foreign_keys.each do |fk|
+      code.concat(generate_has_many(fk) + newline)
     end
 
     code.concat(generate_table_name + newline)
