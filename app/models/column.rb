@@ -4,10 +4,10 @@ class Column < ApplicationRecord
   has_one :primary_key
 
   def ms_type
-    self.ms_column_types.name
+    self.ms_column_types.name 
   end
 
   def ms_database_name
-    self.ms_column_types.prefix + self.database_name
+    self.ms_column_types.prefix + self.database_name 
   end
 end
